@@ -4,6 +4,7 @@ The project scaffolding for the student housing search agent.
 
 Diagram: 
 
+```mermaid
 flowchart LR
     A[User Preferences] --> B[Preference Parser]
     B --> C[Site Discovery]
