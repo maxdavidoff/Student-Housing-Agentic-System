@@ -1,11 +1,61 @@
 # housing-agent
 
-A scaffolded Python project for a student-housing search agent.
+The project scaffolding for the student housing search agent. 
 
-This repo is intentionally light on implementation and heavy on structure so you can:
-- start version control cleanly
-- commit a stable architecture first
-- fill in each module incrementally
+Diagram: 
+
+flowchart LR
+    A[User Preferences] --> B[Preference Parser]
+    B --> C[Site Discovery]
+    C --> D[Listing Extraction]
+    D --> E[Repair Agent]
+    E --> F[Normalization]
+    F --> G[Deduplication]
+    G --> H[Ranking]
+    H --> I[Presentation Top 5]
+
+    D --> DLQ[Dead Letter Queue]
+    E --> RA[Repair Audit Logs]
+
+    F --> N1[Normalized Listings]
+    G --> N2[Canonical Listings]
+    H --> N3[Ranked Results]
+
+    subgraph Inputs
+        A
+    end
+
+    subgraph Core_Agent_System
+        B
+        C
+        D
+        E
+        F
+        G
+        H
+        I
+    end
+
+    subgraph Persistence
+        DLQ
+        RA
+        N1
+        N2
+        N3
+    end
+
+    subgraph Evaluation
+        EV1[Extraction Accuracy]
+        EV2[Ranking Quality]
+        EV3[Freshness Metrics]
+        EV4[Human Feedback]
+    end
+
+    N1 --> EV1
+    N2 --> EV2
+    N3 --> EV2
+    N3 --> EV3
+    I --> EV4
 
 ## Architecture
 
