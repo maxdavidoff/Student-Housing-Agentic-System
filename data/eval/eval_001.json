@@ -1,0 +1,57 @@
+{
+  "eval_case_id": "eval_001",
+  "user_preferences": {
+    "search_id": "eval_search_001",
+    "university": {
+      "name": "University of Pennsylvania",
+      "city": "Philadelphia",
+      "state": "PA",
+      "campus_anchor": {
+        "label": "College Hall",
+        "lat": 39.9522,
+        "lng": -75.1932
+      }
+    },
+    "dates": {
+      "move_in": "2026-08-15",
+      "lease_term_months": 12,
+      "flexible_days": 14
+    },
+    "budget": {
+      "monthly_rent_max": 1400,
+      "utilities_included_required": false,
+      "one_time_fee_max": 1200
+    },
+    "roommates": {
+      "count": 2,
+      "wants_private_bedroom": true,
+      "shared_bath_ok": true
+    },
+    "location": {
+      "max_distance_miles": 1.5,
+      "max_commute_minutes": 20,
+      "transport_modes": ["walk", "transit"]
+    },
+    "preferences": {
+      "required": ["laundry"],
+      "preferred": ["furnished", "wifi"],
+      "dealbreakers": []
+    },
+    "ranking_weights": {
+      "budget": 0.35,
+      "distance": 0.25,
+      "amenities": 0.20,
+      "lease_fit": 0.15,
+      "recency": 0.05
+    }
+  },
+  "candidate_listing_ids": ["lst_001"],
+  "gold": {
+    "acceptable_ids": ["lst_001"],
+    "top_5_ordered_ids": ["lst_001"],
+    "must_exclude_ids": [],
+    "rationales": {
+      "lst_001": "Matches laundry, location, and roommate needs"
+    }
+  }
+}
