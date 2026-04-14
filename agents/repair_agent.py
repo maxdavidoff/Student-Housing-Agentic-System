@@ -8,6 +8,10 @@ from schemas.repair import RepairAudit, RepairDecision, RepairPatch
 
 class StructuredRepairClient(Protocol):
     def repair_listing(self, decision: RepairDecision, raw_row: dict) -> Optional[RepairPatch]:
+        """
+        Return a structured patch for only the fields in decision.target_fields.
+        Return None if no safe patch can be produced.
+        """
         ...
 
 
@@ -24,7 +28,6 @@ def _text_blob(row: dict) -> str:
 
 
 def apply_cheap_repairs(raw_row: dict) -> tuple[dict, list[str]]:
-    """Deterministic, no-model cleanup for common cases."""
     row = dict(raw_row)
     notes: list[str] = []
     blob = _text_blob(row)
@@ -40,13 +43,17 @@ def apply_cheap_repairs(raw_row: dict) -> tuple[dict, list[str]]:
         amenity_overrides["basement_unit"] = True
         notes.append("cheap:basement_unit_true")
 
+    if "no kitchen" in blob or "kitchenette only" in blob:
+        amenity_overrides["no_kitchen"] = True
+        notes.append("cheap:no_kitchen_true")
+
     title = (row.get("title") or "").lower()
     if "studio" in title and row.get("bedrooms") is None:
         row["bedrooms"] = 0
         notes.append("cheap:studio_bedrooms_0")
 
     price_text = (row.get("price_text") or "").lower()
-    if "starting at" in price_text or "from $" in price_text:
+    if "starting at" in price_text or "from $" in price_text or "prices start" in price_text:
         row["price_is_estimated"] = True
         notes.append("cheap:price_estimated")
 
@@ -59,8 +66,19 @@ def apply_cheap_repairs(raw_row: dict) -> tuple[dict, list[str]]:
     return row, notes
 
 
+def _build_evidence_text(row: dict, max_chars: int = 1200) -> str:
+    pieces = [
+        f"TITLE: {row.get('title', '')}",
+        f"PRICE: {row.get('price_text', '')}",
+        f"ADDRESS: {row.get('address_text', '')}",
+        f"AMENITIES: {', '.join(row.get('amenities_text', []) or [])}",
+        f"DESCRIPTION: {row.get('description', '')}",
+    ]
+    text = "\n".join(pieces).strip()
+    return text[:max_chars]
+
+
 def build_repair_decision(row: dict, prefs: PreferenceProfile) -> RepairDecision:
-    """Decide whether this row is worth escalating to a repair model later."""
     reasons: list[str] = []
     target_fields: list[str] = []
 
@@ -80,6 +98,21 @@ def build_repair_decision(row: dict, prefs: PreferenceProfile) -> RepairDecision
         reasons.append("missing_bathrooms")
         target_fields.append("bathrooms")
 
+    if prefs.preferences.required:
+        blob = _text_blob(row)
+        if "laundry" in prefs.preferences.required and (
+            "hookups only" in blob or "shared laundry next door" in blob
+        ):
+            reasons.append("ambiguous_laundry")
+            target_fields.append("amenity_overrides")
+
+    deduped_targets: list[str] = []
+    for field in target_fields:
+        if field not in deduped_targets:
+            deduped_targets.append(field)
+
+    deduped_targets = deduped_targets[:3]
+
     priority = 0
     if "fuzzy_address" in reasons:
         priority += 40
@@ -92,31 +125,15 @@ def build_repair_decision(row: dict, prefs: PreferenceProfile) -> RepairDecision
 
     return RepairDecision(
         listing_id=row.get("listing_id"),
-        should_repair=bool(target_fields),
+        should_repair=bool(deduped_targets),
         priority=min(priority, 100),
-        target_fields=target_fields[:3],
+        target_fields=deduped_targets,
         reasons=reasons,
         evidence_text=_build_evidence_text(row),
     )
 
 
-def _build_evidence_text(row: dict, max_chars: int = 1200) -> str:
-    pieces = [
-        f"TITLE: {row.get('title', '')}",
-        f"PRICE: {row.get('price_text', '')}",
-        f"ADDRESS: {row.get('address_text', '')}",
-        f"AMENITIES: {', '.join(row.get('amenities_text', []) or [])}",
-        f"DESCRIPTION: {row.get('description', '')}",
-    ]
-    return "\n".join(pieces).strip()[:max_chars]
-
-
-def apply_repair_patch(
-    row: dict,
-    patch: Optional[RepairPatch],
-    min_confidence: float = 0.72,
-) -> tuple[dict, list[str], bool]:
-    """Conservatively apply a future model-produced patch."""
+def apply_repair_patch(row: dict, patch: Optional[RepairPatch], min_confidence: float = 0.72) -> tuple[dict, list[str], bool]:
     if patch is None or not patch.applied or patch.confidence < min_confidence:
         return row, [], False
 
@@ -137,8 +154,6 @@ def apply_repair_patch(
 
 
 class RepairManager:
-    """Prepare rows for normalization and optionally route a small subset to a repair model."""
-
     def __init__(
         self,
         repair_client: Optional[StructuredRepairClient] = None,
@@ -178,7 +193,9 @@ class RepairManager:
             if llm_applied:
                 self.repairs_used += 1
 
-        row["repair_notes"] = cheap_notes + llm_notes
+        combined_notes = cheap_notes + llm_notes
+        row["repair_notes"] = combined_notes
+
         audit.llm_repair_applied = llm_applied
         audit.llm_repair_notes = llm_notes
         return row, audit

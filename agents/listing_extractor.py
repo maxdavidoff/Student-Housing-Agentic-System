@@ -10,7 +10,6 @@ def extract_from_sites(
     query: dict,
     dead_letter_dir: str,
 ) -> list[dict]:
-    """Fetch raw rows from all queryable sites and log failed fetches."""
     rows: list[dict] = []
 
     for site in site_plan:
@@ -18,11 +17,20 @@ def extract_from_sites(
             continue
 
         try:
-            fetched = adapter.fetch({"site": site, "query": query})
+            fetched = adapter.fetch(
+                {
+                    "site": site,
+                    "query": query,
+                }
+            )
         except Exception as exc:
             write_failure_artifact(
                 dead_letter_dir,
-                {"stage": "fetch", "site": site, "error": str(exc)},
+                {
+                    "stage": "fetch",
+                    "site": site,
+                    "error": str(exc),
+                },
             )
             continue
 

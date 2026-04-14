@@ -4,7 +4,6 @@ from schemas.listing import ListingRecord
 
 
 def present_top_results(results: list[ListingRecord]) -> list[dict]:
-    """Turn ranked listings into a user-facing JSON payload."""
     payload: list[dict] = []
     for idx, row in enumerate(results, start=1):
         payload.append(

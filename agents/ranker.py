@@ -62,7 +62,11 @@ def score_listing(listing: ListingRecord, prefs: PreferenceProfile) -> ListingRe
 def rank_listings(listings: list[ListingRecord], prefs: PreferenceProfile, top_k: int = 5) -> list[ListingRecord]:
     scored = [score_listing(item, prefs) for item in listings]
     scored.sort(
-        key=lambda x: (x.ranking.hard_filter_pass, x.ranking.final_score, len(x.sources)),
+        key=lambda x: (
+            x.ranking.hard_filter_pass,
+            x.ranking.final_score,
+            len(x.sources),
+        ),
         reverse=True,
     )
     return scored[:top_k]

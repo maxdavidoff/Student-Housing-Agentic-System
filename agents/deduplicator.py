@@ -70,10 +70,15 @@ def merge_duplicate_group(group: list[ListingRecord]) -> ListingRecord:
         base.sources = _merge_sources(base.sources, other.sources)
         for k, v in other.normalized.amenities.items():
             base.normalized.amenities[k] = base.normalized.amenities.get(k, False) or v
+
         for field, conf in other.quality.field_confidence.items():
             base.quality.field_confidence[field] = max(
                 base.quality.field_confidence.get(field, 0.0), conf
             )
+
+        base.quality.missing_fields = sorted(
+            set(base.quality.missing_fields).intersection(set(other.quality.missing_fields))
+        )
         base.quality.repair_notes.extend(other.quality.repair_notes)
         base.quality.dedupe_notes.append(f"merged_duplicate:{other.listing_id}")
 
@@ -82,7 +87,6 @@ def merge_duplicate_group(group: list[ListingRecord]) -> ListingRecord:
 
 
 def deduplicate_listings(records: list[ListingRecord]) -> list[ListingRecord]:
-    """Group likely duplicates and merge them into canonical listings."""
     groups: list[list[ListingRecord]] = []
 
     for rec in records:

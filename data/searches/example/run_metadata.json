@@ -1,0 +1,8 @@
+{
+  "raw_count": 4,
+  "repair_rows_attempted": 1,
+  "repair_rows_llm_applied": 0,
+  "normalized_count": 4,
+  "canonical_count": 3,
+  "duplicates_removed": 1
+}

@@ -30,28 +30,50 @@
     "location": {
       "max_distance_miles": 1.5,
       "max_commute_minutes": 20,
-      "transport_modes": ["walk", "transit"]
+      "transport_modes": [
+        "walk",
+        "transit"
+      ]
     },
     "preferences": {
-      "required": ["laundry"],
-      "preferred": ["furnished", "wifi"],
+      "required": [
+        "laundry"
+      ],
+      "preferred": [
+        "furnished",
+        "wifi"
+      ],
       "dealbreakers": []
     },
     "ranking_weights": {
       "budget": 0.35,
       "distance": 0.25,
-      "amenities": 0.20,
+      "amenities": 0.2,
       "lease_fit": 0.15,
       "recency": 0.05
     }
   },
-  "candidate_listing_ids": ["lst_001"],
+  "candidate_listing_ids": [
+    "lst_001",
+    "lst_002",
+    "lst_003_dup",
+    "lst_004"
+  ],
   "gold": {
-    "acceptable_ids": ["lst_001"],
-    "top_5_ordered_ids": ["lst_001"],
-    "must_exclude_ids": [],
+    "acceptable_ids": [
+      "lst_001",
+      "lst_003_dup"
+    ],
+    "top_5_ordered_ids": [
+      "lst_001",
+      "lst_003_dup"
+    ],
+    "must_exclude_ids": [
+      "lst_002"
+    ],
     "rationales": {
-      "lst_001": "Matches laundry, location, and roommate needs"
+      "lst_001": "Matches laundry, location, and roommate needs",
+      "lst_003_dup": "Good duplicate of strong listing from another source"
     }
   }
 }

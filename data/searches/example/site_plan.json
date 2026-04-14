@@ -1,0 +1,20 @@
+[
+  {
+    "site_name": "Sample Apartments",
+    "source_type": "aggregator",
+    "coverage_area": "Philadelphia",
+    "worth_querying": true,
+    "scrape_method": "adapter",
+    "confidence": 0.9,
+    "browser_required": false
+  },
+  {
+    "site_name": "Campus Rentals",
+    "source_type": "local_site",
+    "coverage_area": "Philadelphia",
+    "worth_querying": true,
+    "scrape_method": "adapter",
+    "confidence": 0.82,
+    "browser_required": true
+  }
+]

@@ -5,5 +5,7 @@ from typing import Protocol
 
 class ListingAdapter(Protocol):
     def fetch(self, query: dict) -> list[dict]:
-        """Fetch raw listing rows from a source."""
+        """
+        Return raw listing dictionaries in a source-agnostic shape.
+        """
         ...

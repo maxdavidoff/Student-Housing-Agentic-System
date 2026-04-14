@@ -12,13 +12,14 @@
   },
   "dates": {
     "move_in": "2026-08-15",
+    "move_out": null,
     "lease_term_months": 12,
     "flexible_days": 14
   },
   "budget": {
-    "monthly_rent_max": 1400,
+    "monthly_rent_max": 1400.0,
     "utilities_included_required": false,
-    "one_time_fee_max": 1200
+    "one_time_fee_max": 1200.0
   },
   "roommates": {
     "count": 2,
@@ -28,11 +29,30 @@
   "location": {
     "max_distance_miles": 1.5,
     "max_commute_minutes": 20,
-    "transport_modes": ["walk", "transit"]
+    "transport_modes": [
+      "transit",
+      "walk"
+    ]
   },
   "preferences": {
-    "required": ["laundry"],
-    "preferred": ["furnished", "wifi", "air conditioning"],
-    "dealbreakers": ["basement unit", "no kitchen"]
+    "required": [
+      "laundry"
+    ],
+    "preferred": [
+      "air_conditioning",
+      "furnished",
+      "wifi"
+    ],
+    "dealbreakers": [
+      "basement_unit",
+      "no_kitchen"
+    ]
+  },
+  "ranking_weights": {
+    "budget": 0.35,
+    "distance": 0.25,
+    "amenities": 0.2,
+    "lease_fit": 0.15,
+    "recency": 0.05
   }
 }
