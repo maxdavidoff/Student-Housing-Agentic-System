@@ -9,8 +9,8 @@ from agents.preference_parser import build_preference_profile
 from agents.presenter import present_top_results
 from agents.ranker import rank_listings
 from agents.repair_agent import RepairManager
-from agents.site_discovery import discover_sites
 from config.settings import SCRAPER_BACKEND
+from services.discovery_service import run_discovery_pipeline
 from utils.io import read_json, write_json, write_jsonl
 
 
@@ -24,7 +24,8 @@ def run_search(preferences_path: str, output_dir: str) -> None:
     prefs_payload = read_json(preferences_path)
     prefs = build_preference_profile(prefs_payload)
 
-    site_plan = discover_sites(prefs.university.name, prefs.university.city)
+    discovery = run_discovery_pipeline(prefs, output_dir)
+    site_plan = discovery["approved_sites"]
     adapter = _build_adapter()
 
     raw_rows = extract_from_sites(
@@ -73,6 +74,9 @@ def run_search(preferences_path: str, output_dir: str) -> None:
         f"{output_dir}/run_metadata.json",
         {
             "scraper_backend": SCRAPER_BACKEND,
+            "site_candidates_count": len(discovery["site_candidates"]),
+            "verified_sites_count": len(discovery["verified_sites"]),
+            "approved_sites_count": len(site_plan),
             "raw_count": len(raw_rows),
             "repair_rows_attempted": sum(1 for a in repair_audits if a["repair_decision"]["should_repair"]),
             "repair_rows_llm_applied": sum(1 for a in repair_audits if a["llm_repair_applied"]),

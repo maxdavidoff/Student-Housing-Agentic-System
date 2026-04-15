@@ -1,13 +1,13 @@
 [
   {
-    "site_name": "Example Student Housing",
+    "site_name": "Example Student Housing Site",
     "source_type": "student_housing",
     "base_url": "https://example.com",
     "search_url_template": "https://example.com/search?q={query}",
     "worth_querying": true,
     "scrape_method": "playwright",
     "browser_required": true,
-    "adapter_name": "playwright_site_adapter",
-    "max_pages": 5
+    "confidence": 0.8,
+    "base_domain": "example.com"
   }
 ]

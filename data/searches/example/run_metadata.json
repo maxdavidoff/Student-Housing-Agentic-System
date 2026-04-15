@@ -1,5 +1,8 @@
 {
   "scraper_backend": "sample",
+  "site_candidates_count": 2,
+  "verified_sites_count": 2,
+  "approved_sites_count": 2,
   "raw_count": 4,
   "repair_rows_attempted": 1,
   "repair_rows_llm_applied": 0,

@@ -18,20 +18,7 @@ class BrowserManager:
     def new_context(self) -> BrowserContext:
         if self.browser is None:
             raise RuntimeError("Browser is not initialized")
-        context = self.browser.new_context(
-            user_agent=(
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/124.0.0.0 Safari/537.36"
-            ),
-            viewport={"width": 1280, "height": 800},
-            locale="en-US",
-            timezone_id="America/New_York",
-            extra_http_headers={
-                "Accept-Language": "en-US,en;q=0.9",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-            },
-        )
+        context = self.browser.new_context()
         context.set_default_timeout(SCRAPER_TIMEOUT_MS)
         return context
 

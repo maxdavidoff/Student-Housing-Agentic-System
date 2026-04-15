@@ -1,25 +1,25 @@
 [
   {
     "rank": 1,
-    "listing_id": "lst_001",
-    "canonical_id": "canon_lst_001",
-    "title": "3BR furnished apartment near campus",
-    "final_score": 0.5965,
-    "raw_weighted_score": 0.6658,
+    "listing_id": "lst_003_dup",
+    "canonical_id": "canon_lst_003_dup",
+    "title": "4100 Walnut 3BR",
+    "final_score": 0.5814,
+    "raw_weighted_score": 0.6489,
     "hard_filter_pass": true,
-    "explanation": "$1,250/mo | 0.6 miles from campus | matches preferred: air_conditioning, furnished, wifi | verified across 2 sources",
-    "price": 1250.0,
+    "explanation": "$1,275/mo | 0.6 miles from campus | matches preferred: air_conditioning, furnished, wifi | stale listing warning | verified across 2 sources",
+    "price": 1275.0,
     "distance_miles": 0.6479916256718599,
     "confidence_multiplier": 0.896,
-    "age_days": 2.7858565777083335,
-    "low_availability_warning": false,
+    "age_days": 4.398574744456019,
+    "low_availability_warning": true,
     "source_sites": [
-      "Sample Apartments",
-      "Campus Rentals"
+      "Campus Rentals",
+      "Sample Apartments"
     ],
     "source_urls": [
-      "https://example.com/lst_001",
-      "https://campus.example.com/4100-walnut"
+      "https://campus.example.com/4100-walnut",
+      "https://example.com/lst_001"
     ],
     "amenities": [
       "laundry",
@@ -40,7 +40,7 @@
     "price": 900.0,
     "distance_miles": 1.4283377988093753,
     "confidence_multiplier": 0.896,
-    "age_days": 9.785856579699074,
+    "age_days": 10.398574747361112,
     "low_availability_warning": true,
     "source_sites": [
       "Sample Apartments"
@@ -65,7 +65,7 @@
     "price": 1100.0,
     "distance_miles": null,
     "confidence_multiplier": 0.5,
-    "age_days": 1.827523248715278,
+    "age_days": 2.4402414125,
     "low_availability_warning": false,
     "source_sites": [
       "Campus Rentals"

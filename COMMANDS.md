@@ -1,4 +1,4 @@
-# Commands to run
+# Commands
 
 ## Setup
 
@@ -10,33 +10,34 @@ playwright install
 cp .env.example .env
 ```
 
-## Run the current sample pipeline
+## Run the discovery-first pipeline
 
 ```bash
+python -m pipelines.run_discovery
 python -m pipelines.run_search
 python -m pipelines.run_eval
 ```
 
-## Test the new browser fetch layer
+## Test the browser fetch layer only
 
 ```bash
 python -m pipelines.run_fetch_debug --url https://example.com --output-dir data/debug/example_fetch
 ```
 
-## Turn on browser-backed scraping
+## Turn on OpenAI web discovery later
 
-```bash
-cp data/site_configs/playwright_sites.example.json data/site_configs/playwright_sites.json
-# edit .env and set: SCRAPER_BACKEND=playwright
-# edit the site config file with a real target site
-python -m pipelines.run_search
+Edit `.env`:
+
+```env
+DISCOVERY_BACKEND=openai_web_search
+OPENAI_API_KEY=your_real_key_here
+OPENAI_MODEL=gpt-5.2
+DISCOVERY_MODEL=gpt-5.2
 ```
 
-## Git branch workflow
+Then rerun:
 
 ```bash
-git checkout -b feature/web-scraper-starter
-git add .
-git commit -m "Add browser-backed scraper starter"
-git push -u origin feature/web-scraper-starter
+python -m pipelines.run_discovery
+python -m pipelines.run_search
 ```
