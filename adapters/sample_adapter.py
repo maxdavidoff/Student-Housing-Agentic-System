@@ -2,8 +2,6 @@ from __future__ import annotations
 
 
 class SampleAdapter:
-    """Temporary adapter used while the real adapters are being built."""
-
     def fetch(self, query: dict) -> list[dict]:
         site = query["site"]
 
@@ -15,7 +13,7 @@ class SampleAdapter:
                     "source_type": "aggregator",
                     "listing_url": "https://example.com/lst_001",
                     "title": "3BR furnished apartment near campus",
-                    "description": "Laundry in building, WiFi included, AC.",
+                    "description": "Laundry in building, WiFi included, AC, 0.8 miles from campus.",
                     "price_text": "$1,250/mo per person",
                     "address_text": "4100 Walnut St, Philadelphia, PA 19104",
                     "amenities_text": ["Laundry", "WiFi", "Furnished", "Air Conditioning"],
@@ -29,7 +27,69 @@ class SampleAdapter:
                     "furnished": True,
                     "scraped_at": "2026-04-13T10:00:00Z",
                     "posted_at": "2026-04-12T09:00:00Z",
-                }
+                },
+                {
+                    "listing_id": "lst_002",
+                    "site_name": "Sample Apartments",
+                    "source_type": "aggregator",
+                    "listing_url": "https://example.com/lst_002",
+                    "title": "2BR budget unit",
+                    "description": "No laundry. Great price but farther away.",
+                    "price_text": "$900/mo",
+                    "address_text": "4500 Pine St, Philadelphia, PA 19143",
+                    "amenities_text": ["Parking"],
+                    "bedrooms": 2,
+                    "bathrooms": 1,
+                    "lease_term_months": 12,
+                    "available_from": "2026-08-15",
+                    "lat": 39.9545,
+                    "lng": -75.2200,
+                    "utilities_included": False,
+                    "furnished": False,
+                    "scraped_at": "2026-04-13T10:00:00Z",
+                    "posted_at": "2026-04-05T09:00:00Z",
+                },
             ]
 
-        return []
+        return [
+            {
+                "listing_id": "lst_003_dup",
+                "site_name": "Campus Rentals",
+                "source_type": "local_site",
+                "listing_url": "https://campus.example.com/4100-walnut",
+                "title": "4100 Walnut 3BR",
+                "description": "Furnished student apartment. Laundry in building.",
+                "price_text": "$1,275/mo per person",
+                "address_text": "4100 Walnut St, Philadelphia, PA 19104",
+                "amenities_text": ["Laundry", "Furnished"],
+                "bedrooms": 3,
+                "bathrooms": 1,
+                "lease_term_months": 12,
+                "available_from": "2026-08-01",
+                "lat": 39.9529,
+                "lng": -75.2054,
+                "utilities_included": True,
+                "furnished": True,
+                "scraped_at": "2026-04-13T11:00:00Z",
+                "posted_at": "2026-04-11T09:00:00Z",
+            },
+            {
+                "listing_id": "lst_004",
+                "site_name": "Campus Rentals",
+                "source_type": "local_site",
+                "listing_url": "https://campus.example.com/fuzzy-house",
+                "title": "Student house near campus",
+                "description": "Starting at $1,100. Laundry hookups only. Basement room available.",
+                "price_text": "Starting at $1,100",
+                "address_text": "Near campus",
+                "amenities_text": [],
+                "bedrooms": None,
+                "bathrooms": None,
+                "lease_term_months": 12,
+                "available_from": "2026-08-20",
+                "utilities_included": None,
+                "furnished": None,
+                "scraped_at": "2026-04-13T11:00:00Z",
+                "posted_at": "2026-04-13T08:00:00Z",
+            },
+        ]

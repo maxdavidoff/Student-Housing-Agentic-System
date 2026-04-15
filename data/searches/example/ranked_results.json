@@ -1,0 +1,81 @@
+[
+  {
+    "rank": 1,
+    "listing_id": "lst_001",
+    "canonical_id": "canon_lst_001",
+    "title": "3BR furnished apartment near campus",
+    "final_score": 0.5965,
+    "raw_weighted_score": 0.6658,
+    "hard_filter_pass": true,
+    "explanation": "$1,250/mo | 0.6 miles from campus | matches preferred: air_conditioning, furnished, wifi | verified across 2 sources",
+    "price": 1250.0,
+    "distance_miles": 0.6479916256718599,
+    "confidence_multiplier": 0.896,
+    "age_days": 2.138830018599537,
+    "low_availability_warning": false,
+    "source_sites": [
+      "Sample Apartments",
+      "Campus Rentals"
+    ],
+    "source_urls": [
+      "https://example.com/lst_001",
+      "https://campus.example.com/4100-walnut"
+    ],
+    "amenities": [
+      "laundry",
+      "wifi",
+      "furnished",
+      "air_conditioning"
+    ]
+  },
+  {
+    "rank": 2,
+    "listing_id": "lst_002",
+    "canonical_id": "canon_lst_002",
+    "title": "2BR budget unit",
+    "final_score": 0.0329,
+    "raw_weighted_score": 0.3669,
+    "hard_filter_pass": false,
+    "explanation": "$900/mo | 1.4 miles from campus | stale listing warning",
+    "price": 900.0,
+    "distance_miles": 1.4283377988093753,
+    "confidence_multiplier": 0.896,
+    "age_days": 9.138830019768518,
+    "low_availability_warning": true,
+    "source_sites": [
+      "Sample Apartments"
+    ],
+    "source_urls": [
+      "https://example.com/lst_002"
+    ],
+    "amenities": [
+      "laundry",
+      "parking"
+    ]
+  },
+  {
+    "rank": 3,
+    "listing_id": "lst_004",
+    "canonical_id": "canon_lst_004",
+    "title": "Student house near campus",
+    "final_score": 0.0238,
+    "raw_weighted_score": 0.475,
+    "hard_filter_pass": false,
+    "explanation": "$1,100/mo | missing info: distance_miles_to_campus, bedrooms",
+    "price": 1100.0,
+    "distance_miles": null,
+    "confidence_multiplier": 0.5,
+    "age_days": 1.180496687800926,
+    "low_availability_warning": false,
+    "source_sites": [
+      "Campus Rentals"
+    ],
+    "source_urls": [
+      "https://campus.example.com/fuzzy-house"
+    ],
+    "amenities": [
+      "basement_unit",
+      "laundry_hookups_only"
+    ]
+  }
+]

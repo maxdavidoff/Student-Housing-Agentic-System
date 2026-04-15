@@ -20,6 +20,7 @@ from schemas.listing import (
 )
 from schemas.preferences import PreferenceProfile
 
+
 PRICE_RE = re.compile(r"(\d[\d,]*(?:\.\d{1,2})?)")
 BED_RE = re.compile(r"(\d+(?:\.\d+)?)\s*(?:br|bed|bedroom)", re.IGNORECASE)
 BATH_RE = re.compile(r"(\d+(?:\.\d+)?)\s*(?:ba|bath)", re.IGNORECASE)
@@ -43,6 +44,7 @@ def _haversine_miles(lat1: float, lon1: float, lat2: float, lon2: float) -> floa
     p2 = math.radians(lat2)
     dlat = math.radians(lat2 - lat1)
     dlon = math.radians(lon2 - lon1)
+
     a = (
         math.sin(dlat / 2) ** 2
         + math.cos(p1) * math.cos(p2) * math.sin(dlon / 2) ** 2
@@ -72,6 +74,7 @@ def _extract_count(pattern: re.Pattern[str], text: str | None) -> Optional[float
 def _infer_amenities(text_blob: str, explicit: list[str]) -> dict[str, bool]:
     text = (text_blob or "").lower()
     explicit_norm = {item.strip().lower() for item in explicit}
+
     results: dict[str, bool] = {}
     for amenity, phrases in AMENITY_PATTERNS.items():
         phrase_hit = any(p in text for p in phrases)
@@ -134,23 +137,18 @@ def _compute_confidence_multiplier(
 ) -> float:
     avg_conf = sum(field_conf.values()) / len(field_conf) if field_conf else 0.75
     multiplier = avg_conf
+
     if price_is_estimated:
         multiplier *= 0.85
     if address_is_fuzzy:
         multiplier *= 0.85
     if any(field in missing_fields for field in ["monthly_rent", "bedrooms", "distance_miles_to_campus"]):
         multiplier *= 0.80
+
     return max(0.50, min(1.0, round(multiplier, 4)))
 
 
 def normalize_listing(raw_row: dict, prefs: PreferenceProfile) -> ListingRecord:
-    """Normalize a raw row into a canonical listing record.
-
-    TODO:
-    - replace address parsing with geocoding
-    - expand amenities extraction
-    - enrich commute time by mode
-    """
     row = dict(raw_row)
     repair_notes = list(row.get("repair_notes", []))
 

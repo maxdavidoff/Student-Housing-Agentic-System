@@ -9,7 +9,6 @@ from agents.presenter import present_top_results
 from agents.ranker import rank_listings
 from agents.repair_agent import RepairManager
 from agents.site_discovery import discover_sites
-from llm_clients.noop_repair_client import NoopRepairClient
 from utils.io import read_json, write_json, write_jsonl
 
 
@@ -28,7 +27,7 @@ def run_search(preferences_path: str, output_dir: str) -> None:
     )
 
     repair_manager = RepairManager(
-        repair_client=NoopRepairClient(),
+        repair_client=None,
         max_llm_repairs=20,
         min_confidence=0.72,
     )
