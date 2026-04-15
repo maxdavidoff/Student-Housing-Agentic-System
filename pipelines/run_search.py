@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from adapters.playwright_site_adapter import PlaywrightSiteAdapter
 from adapters.sample_adapter import SampleAdapter
 from agents.deduplicator import deduplicate_listings
 from agents.listing_extractor import extract_from_sites
@@ -9,7 +10,14 @@ from agents.presenter import present_top_results
 from agents.ranker import rank_listings
 from agents.repair_agent import RepairManager
 from agents.site_discovery import discover_sites
+from config.settings import SCRAPER_BACKEND
 from utils.io import read_json, write_json, write_jsonl
+
+
+def _build_adapter():
+    if SCRAPER_BACKEND == "playwright":
+        return PlaywrightSiteAdapter()
+    return SampleAdapter()
 
 
 def run_search(preferences_path: str, output_dir: str) -> None:
@@ -17,13 +25,14 @@ def run_search(preferences_path: str, output_dir: str) -> None:
     prefs = build_preference_profile(prefs_payload)
 
     site_plan = discover_sites(prefs.university.name, prefs.university.city)
-    adapter = SampleAdapter()
+    adapter = _build_adapter()
 
     raw_rows = extract_from_sites(
         site_plan=site_plan,
         adapter=adapter,
         query=prefs.model_dump(mode="json"),
         dead_letter_dir=f"{output_dir}/dead_letter_queue",
+        artifacts_dir=f"{output_dir}/artifacts",
     )
 
     repair_manager = RepairManager(
@@ -63,6 +72,7 @@ def run_search(preferences_path: str, output_dir: str) -> None:
     write_json(
         f"{output_dir}/run_metadata.json",
         {
+            "scraper_backend": SCRAPER_BACKEND,
             "raw_count": len(raw_rows),
             "repair_rows_attempted": sum(1 for a in repair_audits if a["repair_decision"]["should_repair"]),
             "repair_rows_llm_applied": sum(1 for a in repair_audits if a["llm_repair_applied"]),

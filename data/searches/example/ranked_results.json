@@ -11,7 +11,7 @@
     "price": 1250.0,
     "distance_miles": 0.6479916256718599,
     "confidence_multiplier": 0.896,
-    "age_days": 2.138830018599537,
+    "age_days": 2.7858565777083335,
     "low_availability_warning": false,
     "source_sites": [
       "Sample Apartments",
@@ -40,7 +40,7 @@
     "price": 900.0,
     "distance_miles": 1.4283377988093753,
     "confidence_multiplier": 0.896,
-    "age_days": 9.138830019768518,
+    "age_days": 9.785856579699074,
     "low_availability_warning": true,
     "source_sites": [
       "Sample Apartments"
@@ -65,7 +65,7 @@
     "price": 1100.0,
     "distance_miles": null,
     "confidence_multiplier": 0.5,
-    "age_days": 1.180496687800926,
+    "age_days": 1.827523248715278,
     "low_availability_warning": false,
     "source_sites": [
       "Campus Rentals"

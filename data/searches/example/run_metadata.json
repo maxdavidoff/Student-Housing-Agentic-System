@@ -1,4 +1,5 @@
 {
+  "scraper_backend": "sample",
   "raw_count": 4,
   "repair_rows_attempted": 1,
   "repair_rows_llm_applied": 0,

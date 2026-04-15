@@ -1,7 +1,18 @@
 from __future__ import annotations
 
+from pathlib import Path
+
+from config.settings import SCRAPER_BACKEND, SCRAPER_SITE_CONFIG_PATH
+from utils.io import read_json
+
 
 def discover_sites(university_name: str, city: str | None = None) -> list[dict]:
+    if SCRAPER_BACKEND == "playwright":
+        config_path = Path(SCRAPER_SITE_CONFIG_PATH)
+        if config_path.exists():
+            return read_json(config_path)
+        return []
+
     return [
         {
             "site_name": "Sample Apartments",

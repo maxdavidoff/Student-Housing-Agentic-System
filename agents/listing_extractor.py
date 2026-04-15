@@ -9,6 +9,7 @@ def extract_from_sites(
     adapter: ListingAdapter,
     query: dict,
     dead_letter_dir: str,
+    artifacts_dir: str,
 ) -> list[dict]:
     rows: list[dict] = []
 
@@ -21,6 +22,7 @@ def extract_from_sites(
                 {
                     "site": site,
                     "query": query,
+                    "artifacts_dir": artifacts_dir,
                 }
             )
         except Exception as exc:
