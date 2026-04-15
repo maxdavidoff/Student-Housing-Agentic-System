@@ -1,0 +1,13 @@
+[
+  {
+    "site_name": "Craigslist",
+    "source_type": "student_housing",
+    "base_url": "https://philadelphia.craigslist.org/search/apa",
+    "search_url_template": null,
+    "worth_querying": true,
+    "scrape_method": "playwright",
+    "browser_required": true,
+    "adapter_name": "playwright_site_adapter",
+    "max_pages": 5
+  }
+]
