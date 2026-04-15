@@ -2,7 +2,6 @@
 
 A modular, repair-first agentic system for finding student housing near universities.
 
-```markdown
 ## System Flow
 
 ```mermaid
@@ -58,8 +57,7 @@ flowchart LR
     N3 --> EV2
     N3 --> EV3
     I --> EV4
-
-
+```
 
 ## What this package adds
 
