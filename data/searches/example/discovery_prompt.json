@@ -1,0 +1,3 @@
+{
+  "prompt": "Find websites with student housing listings near University of Pennsylvania in Philadelphia, PA.\nPrioritize official university off-campus housing pages, local student housing sites,\nand listing pages that appear scrapeable. Exclude generic search engine result pages.\nReturn JSON with this shape:\n{\n  \"candidates\": [\n    {\n      \"site_name\": str,\n      \"source_type\": str,\n      \"base_domain\": str,\n      \"base_url\": str,\n      \"candidate_search_url\": str,\n      \"candidate_listing_url\": str,\n      \"relevance_reason\": str,\n      \"discovery_confidence\": float,\n      \"scrape_method_hint\": str,\n      \"browser_required\": bool,\n      \"worth_querying\": bool\n    }\n  ]\n}\nUse current web results only."
+}

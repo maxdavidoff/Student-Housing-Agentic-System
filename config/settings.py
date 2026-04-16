@@ -17,3 +17,6 @@ SCRAPER_SITE_CONFIG_PATH = os.getenv(
     "SCRAPER_SITE_CONFIG_PATH",
     "data/site_configs/playwright_sites.json",
 )
+
+DISCOVERY_BACKEND = os.getenv("DISCOVERY_BACKEND", "sample").strip().lower()
+DISCOVERY_MODEL = os.getenv("DISCOVERY_MODEL", OPENAI_MODEL)

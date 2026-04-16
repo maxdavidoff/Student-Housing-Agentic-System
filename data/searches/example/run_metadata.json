@@ -1,9 +1,12 @@
 {
-  "scraper_backend": "sample",
-  "raw_count": 4,
-  "repair_rows_attempted": 1,
+  "scraper_backend": "playwright",
+  "site_candidates_count": 3,
+  "verified_sites_count": 3,
+  "approved_sites_count": 2,
+  "raw_count": 2,
+  "repair_rows_attempted": 2,
   "repair_rows_llm_applied": 0,
-  "normalized_count": 4,
-  "canonical_count": 3,
-  "duplicates_removed": 1
+  "normalized_count": 2,
+  "canonical_count": 2,
+  "duplicates_removed": 0
 }
