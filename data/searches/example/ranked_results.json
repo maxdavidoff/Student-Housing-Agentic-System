@@ -1,81 +1,48 @@
 [
   {
     "rank": 1,
-    "listing_id": "lst_003_dup",
-    "canonical_id": "canon_lst_003_dup",
-    "title": "4100 Walnut 3BR",
-    "final_score": 0.5814,
-    "raw_weighted_score": 0.6489,
-    "hard_filter_pass": true,
-    "explanation": "$1,275/mo | 0.6 miles from campus | matches preferred: air_conditioning, furnished, wifi | stale listing warning | verified across 2 sources",
-    "price": 1275.0,
-    "distance_miles": 0.6479916256718599,
-    "confidence_multiplier": 0.896,
-    "age_days": 4.398574744456019,
-    "low_availability_warning": true,
+    "listing_id": "31547df7b37b",
+    "canonical_id": "canon_31547df7b37b",
+    "title": "PennKey Support",
+    "final_score": 0.0215,
+    "raw_weighted_score": 0.4292,
+    "hard_filter_pass": false,
+    "explanation": "matches preferred: air_conditioning | missing info: monthly_rent, distance_miles_to_campus",
+    "price": null,
+    "distance_miles": null,
+    "confidence_multiplier": 0.5,
+    "age_days": null,
+    "low_availability_warning": false,
     "source_sites": [
-      "Campus Rentals",
-      "Sample Apartments"
+      "Penn Off-Campus Services FAQ / Listings entry point"
     ],
     "source_urls": [
-      "https://campus.example.com/4100-walnut",
-      "https://example.com/lst_001"
+      "https://pennkeysupport.upenn.edu/"
     ],
     "amenities": [
-      "laundry",
-      "wifi",
-      "furnished",
       "air_conditioning"
     ]
   },
   {
     "rank": 2,
-    "listing_id": "lst_002",
-    "canonical_id": "canon_lst_002",
-    "title": "2BR budget unit",
-    "final_score": 0.0329,
-    "raw_weighted_score": 0.3669,
+    "listing_id": "a37f9c418178",
+    "canonical_id": "canon_a37f9c418178",
+    "title": null,
+    "final_score": 0.012,
+    "raw_weighted_score": 0.24,
     "hard_filter_pass": false,
-    "explanation": "$900/mo | 1.4 miles from campus | stale listing warning",
-    "price": 900.0,
-    "distance_miles": 1.4283377988093753,
-    "confidence_multiplier": 0.896,
-    "age_days": 10.398574747361112,
-    "low_availability_warning": true,
-    "source_sites": [
-      "Sample Apartments"
-    ],
-    "source_urls": [
-      "https://example.com/lst_002"
-    ],
-    "amenities": [
-      "laundry",
-      "parking"
-    ]
-  },
-  {
-    "rank": 3,
-    "listing_id": "lst_004",
-    "canonical_id": "canon_lst_004",
-    "title": "Student house near campus",
-    "final_score": 0.0238,
-    "raw_weighted_score": 0.475,
-    "hard_filter_pass": false,
-    "explanation": "$1,100/mo | missing info: distance_miles_to_campus, bedrooms",
-    "price": 1100.0,
+    "explanation": "$2,215/mo | missing info: distance_miles_to_campus",
+    "price": 2215.0,
     "distance_miles": null,
     "confidence_multiplier": 0.5,
-    "age_days": 2.4402414125,
+    "age_days": null,
     "low_availability_warning": false,
     "source_sites": [
-      "Campus Rentals"
+      "Penn Off-Campus Services FAQ / Listings entry point"
     ],
     "source_urls": [
-      "https://campus.example.com/fuzzy-house"
+      "https://offcampushousing.upenn.edu/"
     ],
-    "amenities": [
-      "basement_unit",
-      "laundry_hookups_only"
-    ]
+    "amenities": []
   }
 ]
