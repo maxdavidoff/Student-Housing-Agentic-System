@@ -59,7 +59,7 @@ flowchart LR
     I --> EV4
 ```
 
-## What this package adds
+## New discovery-first structure
 
 ```mermaid
 flowchart LR
@@ -75,7 +75,7 @@ flowchart LR
     J --> K[Ranking Top 5]
 ```
 
-## Why this structure
+## Rationale
 
 It prevents the scraper from jumping straight into blocked or malformed sites.
 Each site now has to:
