@@ -10,10 +10,22 @@ REQUIRED_MINIMAL_FIELDS = ["listing_url", "site_name"]
 OPTIONAL_SIGNAL_FIELDS = ["title", "price_text", "address_text", "description"]
 
 
-def _minimal_schema_pass(row: dict) -> bool:
+def _minimal_schema_pass(row: dict, search_url: str | None = None) -> tuple[bool, list[str]]:
+    notes: list[str] = []
+
     if not all(row.get(field) for field in REQUIRED_MINIMAL_FIELDS):
-        return False
-    return any(row.get(field) for field in OPTIONAL_SIGNAL_FIELDS)
+        notes.append("missing_listing_url_or_site_name")
+        return False, notes
+
+    if search_url and row.get("listing_url") == search_url:
+        notes.append("listing_url_matches_search_url")
+        return False, notes
+
+    if not any(row.get(field) for field in OPTIONAL_SIGNAL_FIELDS):
+        notes.append("missing_all_listing_signal_fields")
+        return False, notes
+
+    return True, ["sample_listing_validated"]
 
 
 def probe_sites(
@@ -48,6 +60,7 @@ def probe_sites(
                         "source_type": site.source_type,
                         "base_url": site.base_url,
                         "search_url_template": site.verified_search_url,
+                        "candidate_listing_url": site.candidate_listing_url,
                         "max_pages": 1,
                     },
                     "query": query,
@@ -91,7 +104,7 @@ def probe_sites(
             continue
 
         sample = rows[0]
-        schema_pass = _minimal_schema_pass(sample)
+        schema_pass, notes = _minimal_schema_pass(sample, search_url=site.verified_search_url)
         results.append(
             ProbeResult(
                 site_name=site.site_name,
@@ -102,7 +115,7 @@ def probe_sites(
                 scrapeable=schema_pass,
                 listing_count_seen=len(rows),
                 minimum_schema_pass=schema_pass,
-                notes=["sample_listing_validated"] if schema_pass else ["sample_listing_missing_required_shape"],
+                notes=notes,
                 sample_listing=sample,
                 artifact_paths=[sample.get("raw_artifact_path")] if sample.get("raw_artifact_path") else [],
             )

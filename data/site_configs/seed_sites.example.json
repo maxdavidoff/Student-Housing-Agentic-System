@@ -1,0 +1,17 @@
+{
+  "candidates": [
+    {
+      "site_name": "Ohana",
+      "source_type": "sublet_marketplace",
+      "base_domain": "liveohana.ai",
+      "base_url": "https://liveohana.ai",
+      "candidate_search_url": "https://liveohana.ai/sublet",
+      "candidate_listing_url": null,
+      "relevance_reason": "User-identified marketplace for sublets and furnished short-term housing.",
+      "discovery_confidence": 0.95,
+      "scrape_method_hint": "ohana",
+      "browser_required": true,
+      "worth_querying": true
+    }
+  ]
+}

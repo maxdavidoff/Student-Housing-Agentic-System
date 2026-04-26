@@ -10,7 +10,7 @@ playwright install
 cp .env.example .env
 ```
 
-## Run the discovery-first pipeline
+## Sample pipeline
 
 ```bash
 python -m pipelines.run_discovery
@@ -18,26 +18,36 @@ python -m pipelines.run_search
 python -m pipelines.run_eval
 ```
 
-## Test the browser fetch layer only
+## Ohana login and probe
 
 ```bash
-python -m pipelines.run_fetch_debug --url https://example.com --output-dir data/debug/example_fetch
+cp data/site_configs/seed_sites.example.json data/site_configs/seed_sites.json
+python -m scripts.login_ohana
+python -m pipelines.run_probe_ohana
 ```
 
-## Turn on OpenAI web discovery later
+If the probe fails, inspect:
+
+```bash
+find data/searches/example/artifacts/ohana -type f
+cat data/searches/example/probe_results_ohana.jsonl
+```
+
+Then tune `OHANA_LISTING_LINK_SELECTOR` in `.env`, or temporarily add a known Ohana detail URL as `candidate_listing_url` in `data/site_configs/seed_sites.json`.
+
+## Ohana full run
 
 Edit `.env`:
 
 ```env
-DISCOVERY_BACKEND=openai_web_search
-OPENAI_API_KEY=your_real_key_here
-OPENAI_MODEL=gpt-5.2
-DISCOVERY_MODEL=gpt-5.2
+SCRAPER_BACKEND=ohana
+DISCOVERY_BACKEND=sample
+OHANA_REQUIRE_AUTH=true
 ```
 
-Then rerun:
+Then run:
 
 ```bash
-python -m pipelines.run_discovery
 python -m pipelines.run_search
+python -m pipelines.run_eval
 ```

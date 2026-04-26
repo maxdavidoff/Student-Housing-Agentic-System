@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from adapters.playwright_site_adapter import PlaywrightSiteAdapter
-from adapters.sample_adapter import SampleAdapter
 from agents.deduplicator import deduplicate_listings
 from agents.listing_extractor import extract_from_sites
 from agents.normalizer import normalize_listing
@@ -15,8 +13,18 @@ from utils.io import read_json, write_json, write_jsonl
 
 
 def _build_adapter():
+    """Lazy-load adapters so sample runs do not import browser modules unnecessarily."""
+    if SCRAPER_BACKEND == "ohana":
+        from adapters.ohana_adapter import OhanaAdapter
+
+        return OhanaAdapter()
     if SCRAPER_BACKEND == "playwright":
+        from adapters.playwright_site_adapter import PlaywrightSiteAdapter
+
         return PlaywrightSiteAdapter()
+
+    from adapters.sample_adapter import SampleAdapter
+
     return SampleAdapter()
 
 

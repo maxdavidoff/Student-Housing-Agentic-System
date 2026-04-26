@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from adapters.playwright_site_adapter import PlaywrightSiteAdapter
-from adapters.sample_adapter import SampleAdapter
 from agents.discovery_agent import discover_candidate_sites
 from agents.probe_agent import probe_sites
 from agents.site_ranker import rank_verified_sites
@@ -12,9 +10,35 @@ from utils.io import write_json, write_jsonl
 
 
 def _build_adapter():
+    """Lazy-load adapters so optional browser dependencies do not break sample runs."""
+    if SCRAPER_BACKEND == "ohana":
+        from adapters.ohana_adapter import OhanaAdapter
+
+        return OhanaAdapter()
     if SCRAPER_BACKEND == "playwright":
+        from adapters.playwright_site_adapter import PlaywrightSiteAdapter
+
         return PlaywrightSiteAdapter()
+
+    from adapters.sample_adapter import SampleAdapter
+
     return SampleAdapter()
+
+
+def _approved_site_payload(site, probe, prefs: PreferenceProfile) -> dict:
+    return {
+        "site_name": site.site_name,
+        "source_type": site.source_type,
+        "coverage_area": prefs.university.city or "unknown",
+        "worth_querying": True,
+        "scrape_method": site.scrape_method_hint,
+        "browser_required": site.browser_required,
+        "base_url": site.base_url,
+        "search_url_template": site.verified_search_url or site.candidate_search_url or site.base_url,
+        "candidate_listing_url": probe.listing_url or site.candidate_listing_url,
+        "confidence": site.overall_site_score,
+        "base_domain": site.base_domain,
+    }
 
 
 def run_discovery_pipeline(prefs: PreferenceProfile, output_dir: str) -> dict:
@@ -35,20 +59,7 @@ def run_discovery_pipeline(prefs: PreferenceProfile, output_dir: str) -> dict:
     approved_sites = []
     for site, probe in zip(ranked, probe_results):
         if probe.scrapeable and probe.minimum_schema_pass:
-            site_payload = {
-                "site_name": site.site_name,
-                "source_type": site.source_type,
-                "coverage_area": prefs.university.city or "unknown",
-                "worth_querying": True,
-                "scrape_method": site.scrape_method_hint,
-                "browser_required": site.browser_required,
-                "base_url": site.base_url,
-                "search_url_template": site.verified_search_url or site.candidate_search_url or site.base_url,
-                "candidate_listing_url": site.candidate_listing_url,
-                "confidence": site.overall_site_score,
-                "base_domain": site.base_domain,
-            }
-            approved_sites.append(site_payload)
+            approved_sites.append(_approved_site_payload(site, probe, prefs))
 
     write_json(f"{output_dir}/discovery_prompt.json", {"prompt": prompt})
     write_json(
